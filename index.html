@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+    <!-- Metro 4 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
+    <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <!-- Metro 4 -->
+    <script>
+        var data;
+        var dataCliente;
+        var server = "http://127.0.0.1/santana/"
+        server = "http://192.168.1.11/santana/";
+        server = "";
+    </script>
+
+    <style>
+        @font-face {
+            font-family: 'MyLCDFont';
+            src: url('digital-7.ttf') format('truetype');
+
+        }
+
+        .lcd {
+            font-family: "MyLCDFont";
+            background-color: orange;
+            color: black;
+            font-size: 56px;
+
+
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div id="ventas">
+        <div class="row px-5">
+            <div class="cell-12  cell-md-12 bg-cobalt fg-white text-center">
+                <!--Button as implemented in network.js-->
+                <h4 id="moduloventas" class="my-4"><button id="btnNet"
+                        class="tool-button info cycle small outline"><span
+                            class="mif-cogs mif-2x"></span></button>&nbsp;VENTAS <span class="mif-gas-station mif-1x">
+
+                        <span id="fechaVenta"></span><span id="horaVenta" class="d-none"></span>
+                    </span> </h4> </span>
+            </div>
+        </div>
+
+
+     <form id="frmDatos">
+            <div class="row px-5">
+                <input type="hidden" name="tabla" value="pedidos">
+                <input type="hidden" name="indice" value="">
+
+
+
+
+                <div id="divcombustible"
+                    class="cell-12 cell-md-6 cell-lg-6 d-flex flex-justify-center flex-align-center flex-self-center">
+                    <div class="display1" id="mcombustible"><span class="combustible"></span>
+                        <span class="success precioGalon"></span>
+                    </div>
+                </div>
+
+                <div class="lcd prbh cell-12 cell-md-6 cell-lg-6 text-center d-flex flex-justify-center flex-align-center flex-self-center"
+                    id="prbh">
+                    <div class="strprecio w-100 lcd"></div>
+                </div>
+
+
+
+
+
+
+            </div>
+            <div class="row px-5">
+                <div class="cell-12 cell-md-6 bg-white">
+
+                    <label for=""><a href="#!" id="bnewClient" data-role="popover"
+                            data-popover-text="Crea un nuevo cliente" data-popover-position="right"
+                            data-popover-hide="1000" data-cls-popover="bg-dark fg-orange drop-shadow"><span
+                                class="mif-user"></span> Cliente </a></label>
+                    <select name="docIdent" id="docIdent">
+                    </select>
+                </div>
+                <div class="cell-12 cell-md-6">
+                    <label for=""><span class="mif-gas-station"></span><a href="#!" id="cprecios"> Surtidor #
+                        </a></label>
+                    <select name="surtidor" id="surtidor">
+
+                    </select>
+                </div>
+            </div>
+            <div class="row px-5">
+                <div class="cell-6 cell-md-4 ">
+                    <label for="">Venta $</label>
+                    <input name="venta" type="number" required placeholder="$" id="venta" class="ipt venta">
+                    <span class="invalid_feedback">
+                        Debes escribir el valor de la venta
+                    </span>
+                </div>
+
+
+                <div class="cell-6 cell-md-4 ">
+                    <label for="">Galones</label>
+                    <input name="nGalones" type="number" value="" step="any" id="nGalones" required class="ipt galones">
+                </div>
+
+                <div class="cell-12 cell-md-4 ">
+                    <label for=""><span class="mif-gas-station"></span> Credito/Contado </label>
+                    <select name="credCont" data-role="select" id="credCont">
+                        <option value="Contado">CONTADO</option>
+                        <option value="Crédito">CREDITO</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row px-5">
+
+
+
+
+                <div class="cell-6 cell-md-6 ">
+                    <input value="0" name="placa" type="text" onkeyup="javascript:this.value=this.value.toUpperCase();"
+                        data-role="materialinput" data-iconn="<span class='mif-document-file-numbers'>"
+                        data-label="Placa" data-informer="Placa" placeholder="Placa" data-cls-line="bg-cyan"
+                        id="placaCliente">
+                </div>
+                <div class="cell-6 cell-md-6 ">
+                    <input value="" name="kilometraje" type="number" data-role="materialinput" data-label="Kilometraje"
+                        data-informer="Kilometraje" placeholder="Kilometraje" data-cls-line="bg-cyan" id="kms">
+                </div>
+            </div>
+            <div class="row px-5">
+
+                <div class="cell-6 cell-md-6 bg-white">
+
+                    <input name="nombreApellido" type="text" data-role="materialinput"
+                        data-iconn="<span class='mif-user-check'>" data-label="Nombres" +
+                        data-informer="Digite Nombre y Apellidos" placeholder="Digite su Nombre" data-cls-line="bg-cyan"
+                        id="nombresCliente" readonly>
+                </div>
+
+                <div class="cell-6 cell-md-6 bg-white fg-black ">
+
+                    <input name="email" type="text" data-role="materialinput" data-iconn="<span class='mif-envelop'>"
+                        data-label="E_mail" data-informer="Digite un Email válido" placeholder="Digite su Email"
+                        data-cls-line="bg-cyan" id="emailCliente" readonly>
+
+                </div>
+            </div>
+            <div class="row px-5">
+                <div class="cell-12 cell-md-12 bg-light d-block text-center">
+                    <button class="button primary w-75">Guardar Venta</button>
+
+                </div>
+            </div>
+
+
+        </form>
+        <h4 id="#totalventa" class="text-center"><a href="#!" id="cargaVentas">Ventas</a>
+            <span></span>
+        </h4>
+        <div id="listadoVentas" class="">
+            <div class="d-flex flex-justify-center">
+                <!-- <div id="listadoLoadSpinner" class="d-none" data-role="activity" data-type="cycle" data-style="color"> -->
+                </div>
+            </div>
+            <div class="container-fluid">
+                    <table id="tlistadoVentas" class="table striped table-border mt-4" data-table-search-title="Buscar" 
+                    data-role="table"
+                    data-table-info-title="Mostrando $1 a $2 de $3 entradas"
+                    data-table-rows-count-title="Mostrar Entradas" data-pagination-next-title="Siguiente"
+                    data-pagination-prev-title="Anterior" data-horizontal-scroll="true"
+                    data-view-save-path="TABLE:tlistadoVentas:KEYS"
+                    data-view-save-mode="client"
+                    data-static-view="false">
+                    <thead>
+                        <tr id="encVentas">
+
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyVentas">
+                    </tbody>
+                </table>
+               
+                    
+                
+            </div>
+        </div>
+    </div>
+    <div class="cell-12 cell-md-1 bg-blue"></div>
+
+
+    </div>
+
+    </div>
+
+
+    <div class="dialog secondary dialog-scrollable no-visible" data-role="dialog" data-actions="dialogActions"
+        id="newClient">
+        <div class="dialog-title">Datos del nuevo Cliente</div>
+        <div class="dialog-content" style="overflow:auto;">
+            <form id="frmNuevoCliente">
+                <input type="hidden" name="tabla" value="clientes">
+                <input type="hidden" name="indice" value="">
+                <div class="row">
+                    <div class="cell-12 cell-md-6">
+                        <label>Doc. Identidad</label>
+                        <input name="identificacion" id="c_identificacion" type="text" pattern="[0-9]"
+                            inputmode="numeric" placeholder="Ingrese # de Identificación" />
+
+                    </div>
+                    <div class="cell-12 cell-md-6">
+                        <label>Nombres</label>
+                        <input name="nombres" id="c_nombres" type="text" placeholder="Nombres y Apellidos" />
+
+                    </div>
+                    <div class="cell-12 cell-md-6">
+                        <label>Email</label>
+                        <input name="email" id="c_email" type="email" placeholder="Ingrese Email" />
+
+                    </div>
+                    <div class="cell-12 cell-md-6">
+                        <label>Teléfono</label>
+                        <input name="telefono" id="c_telefono" type="tel" placeholder="Número del celular" />
+
+                    </div>
+                    <div class="cell-12 cell-md-6">
+                        <label>Direccion</label>
+                        <input name="direccion" id="c_direccion" type="text" placeholder="Dirección" />
+
+                    </div>
+                    <div class="cell-12 cell-md-6">
+                        <label>Placa</label>
+                        <input name="placa" id="c_placa" type="tel" placeholder="Número Placa" />
+
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+        <div class="dialog-actions">
+
+        </div>
+    </div>
+
+
+    <script src="metro.js"></script>
+    <script src="bind/bind.min.js"></script>
+    <script src="utils.js"></script>
+    <script src="network.js"></script>
+    <script src="tableVentas.js"></script>
+    <script src="santana.js"></script>
+    <script src="manageClientes.js"></script>
+    <script src="saveClients.js"></script>
+    <script src="index.js"></script>
+
+
+
+</body>
+
+
+</html>

@@ -1,0 +1,31 @@
+
+E.D.S. SANTANA
+ANSERCA
+CALDAS
+N.I.T. 00000000
+Cel:312-760-3442
+VARIANTE CENTRAL
+VIA MEDELLIN
+
+VENTA DE COMBUSTIBLES
+
+tabla:pedidos
+docIdent:9695141
+surtidor:2
+venta:174000
+nGalones:20
+credCont:Contado
+placa:YSJ94C
+kilometraje:200
+nombreApellido:Cesar Leandro Patiño V
+email:ceslep@gmail.com
+
+
+Gracias por su compra.
+Vuelva Pronto.
+
+
+
+
+
+

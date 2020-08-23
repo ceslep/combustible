@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4.3.2/css/metro-all.min.css">
+    <script src="https://cdn.metroui.org.ua/v4.3.2/js/metro.min.js"></script>
+    <script>
+        $(function(){
+
+            const getData = async _=>{
+            let response = await fetch("https://appdatos.co/santana/getPedidos.php");
+            let photos = await response.json();
+            console.log(photos);
+            console.log(photos[0]);
+            let html="";
+            Object.keys(photos[0]).forEach(key=>{
+
+                if (!((key=="Fecha")||(key=="Hora"))){
+                    let bgClass="";
+                    switch(key){
+                        case 'Factura':bgClass="bg-darkBlue";break;
+                        case 'Venta':bgClass="bg-green";break;
+                        case 'Galones':bgClass="bg-yellow";break;
+                    }
+                html+=`
+
+                                <th data-cls-column="${bgClass}">
+                                 ${key}   
+                                </th>
+                
+                `;
+                }
+                else
+                                html+=`
+                              <th>
+                                 ${key}   
+                                </th>
+                
+                `;
+               
+            });
+            $("#thead").empty().html(html);
+            html="";
+            photos.forEach(photo => {
+                        html+="<tr>";
+                        Object.keys(photo).forEach(key=>{
+                            
+                            html+=`    
+                                        <td>
+                                              ${photo[key]}  
+                                        </td>    
+
+                            `;
+                        });
+                        html+="</tr>";
+                
+            });
+            $("#tbody").empty().html(html);
+            Metro.makePlugin("#tablaPhotos","table");
+        }
+
+        getData();
+
+        })
+        
+        
+    </script>    
+</head>
+<body>
+    <table class="table table-border cell-border" id="tablaPhotos">
+        <thead>
+        <tr id="thead">
+           
+        </tr>
+        </thead>
+        <tbody id="tbody">
+            
+        </tbody>    
+        </table>
+</body>
+</html>
